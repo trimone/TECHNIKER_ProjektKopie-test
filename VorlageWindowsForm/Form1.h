@@ -1,3 +1,16 @@
+/* =====================================================================================================================================
+TECHNIKER PROJEKT FTED	2018/19						HighFinesse GmbH	
+													Wöhrdstrasse 4
+Gabriel Baumann | Alex Huber						72072 Tübingen
+													Germany
+													Phone +49 7071 968515
+Digitale Ansteuerung einer Stromquelle
+Grafische Benutzeroberfläche (GUI)
+
+GitHub Reposotory: https://github.com/trimone/TechnikerProjekt_GUI (private)
+ =====================================================================================================================================*/
+
+
 #pragma once
 // Hier gibt es eine Änderung !!
 #include <time.h>
@@ -125,7 +138,7 @@ namespace VorlageWindowsForm {
 			this->Controls->Add(this->button1);
 			this->Name = L"Form1";
 			this->Text = L"f";
-			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load); /// neu dazu gekommen
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -245,12 +258,12 @@ private: void _COM_Abfragen()
 		// Array Ende erreicht 
 	}
 
-	serialPort1->PortName = goodPort;	/// EXEPETION ==> System.ArgumentNullException: "Der Wert darf nicht NULL sein. Parametername: PortName"
+/////////	serialPort1->PortName = goodPort;	/// EXEPETION ==> System.ArgumentNullException: "Der Wert darf nicht NULL sein. Parametername: PortName"
 										// wenn keine Ports gefunden => FEHLER!! => muss abgefangen werden!
 
 
 	//serialPort1->po
-	ausgabe->Text = serialPort1->PortName;
+	//ausgabe->Text = serialPort1->PortName;
 
 	//serialPort1->Close();
 }
@@ -284,7 +297,7 @@ private: System::Void eingabe_KeyDown(System::Object^  sender, System::Windows::
 }
 
 
-private: array <CurrentSource^>^ generateCurrArray (String^ _HF_ID)
+private: array <CurrentSource^>^ generateCurrArray (String^ _HF_ID)	/// Abklären was Referenzen angeht
 {
 	currSource->Resize(currSource, CurrentSource::getCount()+1);
 
@@ -292,12 +305,17 @@ private: array <CurrentSource^>^ generateCurrArray (String^ _HF_ID)
 	//currSource = gcnew array<CurrentSource^>(CurrentSource::getCount() + 1); // = gcnew array<CurrentSource^>(9);
 	//CurrentSource^ cur1[10]; //= gcnew CurrentSource(_HF_ID);	// ein 'CurrentSource' Objekt wird erzeugt
 	
-	currSource[0] = gcnew CurrentSource{ _HF_ID };
+	currSource[0] = gcnew CurrentSource{ _HF_ID };	// {Übergabeparameter}
 	//currSource = gcnew array<CurrentSource^>(add);
 
+	currSource->Resize(currSource, CurrentSource::getCount() + 1);
 	currSource[1] = gcnew CurrentSource;
+	currSource->Resize(currSource, CurrentSource::getCount() + 1);
+	currSource[2] = gcnew CurrentSource;
 	return currSource;
 }
+
+// kann evtl weg
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 }
 };
